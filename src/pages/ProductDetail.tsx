@@ -1,11 +1,16 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { useCart } from "@/contexts/CartContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
+  const { addItem } = useCart();
+  const { t } = useLanguage();
 
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", id],
@@ -24,9 +29,16 @@ const ProductDetail = () => {
   }
 
   const handleAddToCart = () => {
+    addItem({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+      quantity: 1,
+    });
     toast({
-      title: "Producto añadido",
-      description: "El producto se ha añadido al carrito correctamente",
+      title: t("product_added"),
+      description: t("product_added_to_cart"),
     });
   };
 
@@ -46,7 +58,7 @@ const ProductDetail = () => {
           <p className="text-gray-600 mb-4">{product.description}</p>
           <p className="text-2xl font-bold mb-6">${product.price}</p>
           <Button onClick={handleAddToCart} className="w-full md:w-auto">
-            Añadir al carrito
+            {t("add_to_cart")}
           </Button>
         </div>
       </div>

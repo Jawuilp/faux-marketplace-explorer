@@ -9,9 +9,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCart } from "@/contexts/CartContext";
 
 const Navbar = () => {
   const { language, setLanguage, t } = useLanguage();
+  const { items } = useCart();
+
+  const cartItemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <nav className="bg-primary text-primary-foreground py-4 px-6 sticky top-0 z-50">
@@ -51,7 +55,7 @@ const Navbar = () => {
           <Link to="/cart" className="relative">
             <ShoppingCart size={24} />
             <span className="absolute -top-2 -right-2 bg-secondary text-secondary-foreground rounded-full w-5 h-5 flex items-center justify-center text-xs">
-              0
+              {cartItemsCount}
             </span>
           </Link>
         </div>
