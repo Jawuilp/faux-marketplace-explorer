@@ -1,7 +1,9 @@
+
 import { useQuery } from "@tanstack/react-query";
 import ProductCard from "@/components/ProductCard";
 import CategoryFilter from "@/components/CategoryFilter";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Product {
   id: number;
@@ -13,6 +15,7 @@ interface Product {
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const { t } = useLanguage();
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["products"],
@@ -44,7 +47,7 @@ const Index = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Nuestros Productos</h1>
+      <h1 className="text-4xl font-bold mb-8">{t("our_products")}</h1>
       
       {categories && (
         <CategoryFilter
