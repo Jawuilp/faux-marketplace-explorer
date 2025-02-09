@@ -1,5 +1,5 @@
 
-import { ShoppingCart, Search, Globe2 } from "lucide-react";
+import { ShoppingCart, Search, Globe2, LogIn, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,6 +36,16 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" className="gap-2">
+            <LogIn className="h-4 w-4" />
+            {t("login")}
+          </Button>
+          
+          <Button variant="secondary" size="sm" className="gap-2">
+            <UserPlus className="h-4 w-4" />
+            {t("register")}
+          </Button>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
