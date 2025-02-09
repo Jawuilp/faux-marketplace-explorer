@@ -25,8 +25,12 @@ const SellerProfile = () => {
     },
   });
 
-  // Por ahora usamos datos de ejemplo
-  const sellerProducts = products?.slice(0, 4) || [];
+  // Filtramos los productos para mostrar solo los del vendedor actual
+  // Por ahora, como es una API de ejemplo, simulamos que cada producto
+  // con ID múltiplo del ID del vendedor le pertenece
+  const sellerProducts = products?.filter((product: Product) => 
+    product.id % Number(id) === 0
+  ) || [];
 
   return (
     <div className="container max-w-4xl mx-auto p-6">
@@ -36,7 +40,7 @@ const SellerProfile = () => {
           <AvatarFallback>US</AvatarFallback>
         </Avatar>
         <div>
-          <h1 className="text-2xl font-bold">Vendedor Ejemplo</h1>
+          <h1 className="text-2xl font-bold">Vendedor #{id}</h1>
           <p className="text-gray-500">Se unió en Enero 2024</p>
           <p className="mt-2">¡Hola! Me encanta vender ropa de segunda mano y encontrar nuevos hogares para prendas especiales.</p>
         </div>
@@ -44,11 +48,15 @@ const SellerProfile = () => {
 
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">{t("seller_products")}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sellerProducts.map((product: Product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
-        </div>
+        {sellerProducts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sellerProducts.map((product: Product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">Este vendedor aún no tiene productos.</p>
+        )}
       </div>
     </div>
   );
